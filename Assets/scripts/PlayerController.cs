@@ -7,7 +7,7 @@ public class PlayerController : NetworkBehaviour
 	
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
-	
+    public Transform gun;
 	
 	
     void Update()
@@ -19,12 +19,16 @@ public class PlayerController : NetworkBehaviour
 		}
 		
 		//movements
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
+        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 3.0f;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
 
-        transform.Rotate(0, x, 0);
-        transform.Translate(0, 0, z);
-        
+        var rot_x = Input.GetAxis("Mouse X") * 10.0f; ;
+        var rot_y = Input.GetAxis("Mouse Y");
+
+        transform.Rotate(0, rot_x, 0);
+        transform.Translate(x, 0, z);
+
+        gun.Rotate(-rot_y, 0, 0);
         
         //shooting
         if (Input.GetKeyDown(KeyCode.Space))
@@ -37,7 +41,11 @@ public class PlayerController : NetworkBehaviour
     
     public override void OnStartLocalPlayer()
 	{
-		GetComponent<MeshRenderer>().material.color = Color.blue;
+		//GetComponent<MeshRenderer>().material.color = Color.blue;
+        Camera c = (Camera)GetComponentInChildren<Camera>();
+        c.depth = 1;
+
+        gun = GameObject.Find("Gun").transform;
 	}
 	
 	[Command]
