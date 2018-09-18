@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ObjectGrabber : MonoBehaviour {
 
-    public FixedJoint joint;
+    public Joint joint;
     public GameObject inside ;
     private bool holding;
 	// Use this for initialization
 	void Start () {
-        joint = this.gameObject.GetComponent<FixedJoint>();
+        joint = this.gameObject.GetComponent<ConfigurableJoint>();
         holding = false;
     }
 	
@@ -20,12 +20,10 @@ public class ObjectGrabber : MonoBehaviour {
             if(!holding)
             {
                 joint.connectedBody = inside.GetComponent<Rigidbody>();
-                joint.connectedBody.isKinematic = true;
                 holding = true;
             }
             else
             {
-                joint.connectedBody.isKinematic = false;
                 joint.connectedBody = null;
                 holding = false;
             }
@@ -36,7 +34,7 @@ public class ObjectGrabber : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entered " + other.name);
+        //Debug.Log("Entered " + other.name);
         if(other.gameObject!=this.gameObject)
             inside = other.gameObject;
 
