@@ -2,5 +2,5 @@
 
 
 On en est là 
-https://unity3d.com/learn/tutorials/topics/multiplayer-networking/handling-non-player-objects?playlist=29690
+https://unity3d.com/fr/learn/tutorials/topics/multiplayer-networking/destroying-enemies?playlist=29690
 
