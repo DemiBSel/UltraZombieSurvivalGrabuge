@@ -567,6 +567,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1026196150648188, guid: 8a5bae459676b4bf9aea4fdc2255aed1,
     type: 2}
   bulletSpawn: {fileID: 4494847319870440}
+  gun: {fileID: 0}
+  hand: {fileID: 0}
+  state: 
 --- !u!114 &114976694891502254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -723,5 +726,5 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 50, y: 0}
-  m_SizeDelta: {x: 100, y: 10}
+  m_SizeDelta: {x: 20, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
