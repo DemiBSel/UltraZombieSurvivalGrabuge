@@ -42,9 +42,9 @@ public class PlayerController : NetworkBehaviour
         var rot_x = Input.GetAxis("Mouse X") * 10.0f; ;
         var rot_y = Input.GetAxis("Mouse Y") * 10.0f;
 
-        bool blockCam = tools.localRotation.x - rot_y / 100.0f > -1 && tools.localRotation.x - rot_y / 100.0f < 1;
+        Debug.Log("rotation : " + tools.localRotation.x);
+        bool blockCam = tools.localRotation.x - rot_y / 100.0f > 0 && tools.localRotation.x - rot_y / 100.0f < 1;
         CmdMovements(blockCam, (float)x, (float)z, (float)rot_x, (float)rot_y);
-        //RpcMovements(blockCam, (float)x, (float)z, (float)rot_x, (float)rot_y);
         //attention le nom de la variable blockCam est pas logique du tout mdr
 
 
