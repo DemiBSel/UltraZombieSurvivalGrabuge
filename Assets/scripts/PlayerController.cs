@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-
+using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour
 {
+
+    public string playerName;
 
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
@@ -73,7 +75,7 @@ public class PlayerController : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
-        //GetComponent<MeshRenderer>().material.color = Color.blue;
+        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = name;
         local_camera = (Camera)transform.Find("Tools").transform.Find("Main Camera").GetComponentInChildren<Camera>();
         local_camera.depth = 1;
 
@@ -82,7 +84,7 @@ public class PlayerController : NetworkBehaviour
         nextFire = 0;
 
 
-    tools = transform.Find("Tools");
+        tools = transform.Find("Tools");
         gun = tools.transform.Find("Gun").transform;
         hand = tools.transform.Find("Hand").transform;
     }
