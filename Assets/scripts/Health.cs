@@ -34,7 +34,7 @@ public class Health : NetworkBehaviour
                     }
                     else
                     {
-                        currentHealth = 0;
+                        currentHealth = maxHealth;
                         RpcRespawn();
                     }
                 }
@@ -53,7 +53,7 @@ public class Health : NetworkBehaviour
 		if (isLocalPlayer)
 		{
 			//reset initial health
-			currentHealth = maxHealth;
+			//currentHealth = maxHealth;
 			// move back to zero location
 			Vector3 spawnPoint = Vector3.zero;
 

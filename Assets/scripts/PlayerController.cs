@@ -15,6 +15,9 @@ public class PlayerController : NetworkBehaviour
     public string state;
     public bool jumping;
 
+    public float fireRate;
+    public float nextFire;
+
 
     void Update()
     {
@@ -42,16 +45,17 @@ public class PlayerController : NetworkBehaviour
         var rot_x = Input.GetAxis("Mouse X") * 10.0f; ;
         var rot_y = Input.GetAxis("Mouse Y") * 10.0f;
 
-        Debug.Log("rotation : " + tools.localRotation.x);
+
         bool blockCam = tools.localRotation.x - rot_y / 100.0f > 0 && tools.localRotation.x - rot_y / 100.0f < 1;
         CmdMovements(blockCam, (float)x, (float)z, (float)rot_x, (float)rot_y);
         //attention le nom de la variable blockCam est pas logique du tout mdr
 
 
         //shooting
-        if (Input.GetButton("Fire2"))
-        {
+        if (Input.GetButton("Fire2") && Time.time >nextFire)
+        {      
             CmdFire();
+            nextFire = Time.time + fireRate;
         }
 
         //state machine (pour les animations)
@@ -74,8 +78,11 @@ public class PlayerController : NetworkBehaviour
         local_camera.depth = 1;
 
         jumping = false;
+        fireRate = 0.25f;
+        nextFire = 0;
 
-        tools = transform.Find("Tools");
+
+    tools = transform.Find("Tools");
         gun = tools.transform.Find("Gun").transform;
         hand = tools.transform.Find("Hand").transform;
     }
@@ -92,7 +99,7 @@ public class PlayerController : NetworkBehaviour
         // Add velocity to the bullet
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 25;
         //tools.Rotate(-0.5f, 0, 0);
-        RpcRecoil();
+        //RpcRecoil();
 
         NetworkServer.Spawn(bullet);
         // Destroy the bullet after 2 seconds
@@ -119,7 +126,7 @@ public class PlayerController : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name.Contains("Floor"))
+        if(other.gameObject.name.Contains("Terrain"))
         {
             this.jumping = false;
         }
@@ -128,7 +135,7 @@ public class PlayerController : NetworkBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.name.Contains("Floor"))
+        if (other.gameObject.name.Contains("Terrain"))
         {
             this.jumping = false;
         }

@@ -72,8 +72,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4013899554471776}
-  - component: {fileID: 114672420063835400}
-  - component: {fileID: 114673155331633658}
   m_Layer: 0
   m_Name: Tools
   m_TagString: Untagged
@@ -154,7 +152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1171506646841532}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.032000005, y: 0.93799967, z: -0.14280003}
+  m_LocalPosition: {x: -0.032000005, y: 1.099, z: 0.07}
   m_LocalScale: {x: 4, y: 4, z: 2}
   m_Children: []
   m_Father: {fileID: 4640199665870188}
@@ -422,59 +420,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 0}
   inside: {fileID: 0}
---- !u!114 &114672420063835400
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1573744308640248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 40
-    i1: 147
-    i2: 141
-    i3: 148
-    i4: 189
-    i5: 7
-    i6: 224
-    i7: 196
-    i8: 104
-    i9: 164
-    i10: 16
-    i11: 237
-    i12: 70
-    i13: 40
-    i14: 70
-    i15: 94
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
---- !u!114 &114673155331633658
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1573744308640248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!124 &124074774845881724
 Behaviour:
   m_ObjectHideFlags: 1
