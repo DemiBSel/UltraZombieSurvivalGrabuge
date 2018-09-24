@@ -11,6 +11,9 @@ public class PlayerController : NetworkBehaviour
     public Transform bulletSpawn;
     public Transform gun;
 
+    GameObject menu;
+    bool menuOn = false;
+
     public Transform tools;
     public Transform hand;
     private Camera local_camera;
@@ -19,7 +22,6 @@ public class PlayerController : NetworkBehaviour
 
     public float fireRate;
     public float nextFire;
-
 
     void Update()
     {
@@ -70,6 +72,21 @@ public class PlayerController : NetworkBehaviour
             state = "idle";
         }
 
+        // Update is called once per frame
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (menuOn)
+            {
+                menu.SetActive(false);
+                menuOn = false;
+                Debug.Log("coucou???");
+            }
+            else
+            {
+                menu.SetActive(true);
+                menuOn = true;
+            }
+        }
     }
 
 
@@ -87,6 +104,10 @@ public class PlayerController : NetworkBehaviour
         tools = transform.Find("Tools");
         gun = tools.transform.Find("Gun").transform;
         hand = tools.transform.Find("Hand").transform;
+
+        menu = GameObject.Find("Menu");
+        menu.SetActive(false);
+
     }
 
     [Command]

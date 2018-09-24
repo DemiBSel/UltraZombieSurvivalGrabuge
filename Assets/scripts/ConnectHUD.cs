@@ -10,24 +10,29 @@ public class ConnectHUD : MonoBehaviour {
     GameObject UI;
     Button startHostBut;
     Button joinHostBut;
+    Button quitBut;
     InputField hostAddField;
     InputField playerNameField;
+    GameObject menu;
 
 	// Use this for initialization
 	void Start () {
 
         netMan = GetComponent<CustomNetworkManager>();
         UI = GameObject.Find("WelcomeScreen");
+        menu = GameObject.Find("Menu");
         startHostBut = UI.transform.Find("StartHostButton").GetComponent<Button>();
         joinHostBut = UI.transform.Find("StartClientButton").GetComponent<Button>();
 
         hostAddField = UI.transform.Find("hostAddressField").GetComponent<InputField>();
         playerNameField = UI.transform.Find("PlayerNameField").GetComponent<InputField>();
 
+        quitBut = menu.transform.Find("QuitButton").GetComponent<Button>();
 
         startHostBut.onClick.AddListener(startHost);
         joinHostBut.onClick.AddListener(joinHost);
-	}
+        quitBut.onClick.AddListener(quitGame);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -62,5 +67,12 @@ public class ConnectHUD : MonoBehaviour {
             netMan.StartClient();
             UI.SetActive(false);
         }
+    }
+
+    void quitGame()
+    {
+        netMan.StopHost();
+        menu.SetActive(false);
+        UI.SetActive(true);
     }
 }

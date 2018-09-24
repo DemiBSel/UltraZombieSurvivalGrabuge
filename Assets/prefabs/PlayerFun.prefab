@@ -388,7 +388,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1137396508753630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.016037, y: -0.92, z: 48.516556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4861931245737878}
@@ -1248,6 +1248,7 @@ MonoBehaviour:
     type: 2}
   bulletSpawn: {fileID: 4581906076024450}
   gun: {fileID: 4703277584009706}
+  menu: {fileID: 0}
   tools: {fileID: 0}
   hand: {fileID: 4130432889844920}
   state: '"idle"'
@@ -1260,13 +1261,15 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1108352039284106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f51afd0691e58d54d84b58253d70e745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   joint: {fileID: 0}
   inside: {fileID: 0}
+  width: 32
+  height: 32
 --- !u!114 &114774249605469818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1351,7 +1354,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.50000125, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.2598688, y: 1.3262833, z: 1.2300858}
+  m_ConnectedAnchor: {x: 4.1777077, y: 0.40628332, z: 17.768064}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2

@@ -11,53 +11,161 @@ public class ZombieBehavior : MonoBehaviour {
     int bored = DEF_BORED;
     int tired = DEF_TIRED;
 
+    float gravity = 100;
+    int Damping = 6;
+
+    float Distance = 0f;
+    public GameObject Target;
+   // public CharacterController controller;
+    float moveSpeed = 1.5f;
+
+    float attackTime = 0f;
+    float attackRepeatTime = 1.0f;
+
+    float lookAtDistance = 20;
+    float chaseRange = 20;
+    float attackRange = 2.2f;
+
+    private Vector3 moveDirection = Vector3.zero;
+
+
     Animator animationControl;
 
     // Use this for initialization
     void Start() {
         animationControl = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
     void Update() {
-        Debug.Log("state " + bored);
-        switch (state)
+        Target = FindClosestPlayer();
+        //Debug.Log("state " + bored);
+        Distance = Vector3.Distance(Target.transform.position, transform.position);
+       // Debug.Log("distance " + Distance);
+        if (Distance < lookAtDistance)
         {
-            case ("idle"):
-                bored--;
-                animationControl.Play("idle");
-                if (bored == 0)
-                {
-                    state = "wandering";
-                    tired = DEF_TIRED;
-                }
-                break;
-            case ("walking"):
-
-
-                break;
-            case ("wandering"):
-                wander();
-                tired--;
-
-                if (tired == 0)
-                {
-                    state = "idle";
-                    bored = DEF_BORED;
-                }
-                break;
+            lookAt();
         }
+
+        if (Distance < attackRange)
+        {
+            attack();
+
+        }
+        else if (Distance < chaseRange)
+        {
+            chase();
+        }
+
+
     }
 
+        /*  switch (state)
+          {
+              case ("idle"):
+                  bored--;
+                  animationControl.Play("idle");
+                  if (bored == 0)
+                  {
+                      state = "wandering";
+                      tired = DEF_TIRED;
+                  }
+                  break;
+              case ("walking"):
 
-    float angular = 0.0f;
 
-    void wander()
+                  break;
+              case ("wandering"):
+                  wander();
+                  tired--;
+
+                  if (tired == 0)
+                  {
+                      state = "idle";
+                      bored = DEF_BORED;
+                  }
+                  break;
+
+              case ("attack"):
+                  attack();
+                  break;
+          }*/
+   
+
+
+    //float angular = 0.0f;
+
+  /*  void wander()
     {
         angular += Random.Range(-0.1f, 0.1f);
         animationControl.Play("walk");
         transform.Rotate(0,angular , 0);
         transform.Translate(0, 0, Random.Range(0, 0.03f));
+    }*/
+
+    void attack()
+    {
+
+        if (Time.time > attackTime)
+        {
+
+            animationControl.Play("attack");
+            var health = Target.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(10);
+            }
+            attackTime = Time.time + attackRepeatTime;
+        }
     }
+
+    void lookAt()
+    {
+
+        var rotation = Quaternion.LookRotation(Target.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * Damping);
+    }
+
+    void chase()
+    {
+
+        animationControl.Play("walk");
+
+        moveDirection = transform.forward;
+        moveDirection *= moveSpeed;
+        moveDirection.y -= gravity * Time.deltaTime;
+    //    transform.Translate(0, 0, Random.Range(0, 0.03f));
+     transform.Translate(moveDirection * Time.deltaTime);
+        // controller.Move(moveDirection * Time.deltaTime);
+    }
+
+    void ApplyDamage()
+    {
+        chaseRange += 30;
+        moveSpeed += 2;
+        lookAtDistance += 40;
+    }
+
+    public GameObject FindClosestPlayer()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("Player");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
+
 
 }
