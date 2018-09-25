@@ -105,7 +105,7 @@ public class PlayerController : NetworkBehaviour
         gun = tools.transform.Find("Gun").transform;
         hand = tools.transform.Find("Hand").transform;
 
-        menu = GameObject.Find("Menu");
+        menu = GameObject.Find("Network Manager").GetComponent<ConnectHUD>().getQuitHud();
         menu.SetActive(false);
 
     }
@@ -147,6 +147,8 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+
+    //ça c pour empecher les double jumps
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name.Contains("Terrain"))

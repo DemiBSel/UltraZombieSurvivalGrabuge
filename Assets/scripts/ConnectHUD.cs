@@ -20,7 +20,8 @@ public class ConnectHUD : MonoBehaviour {
 
         netMan = GetComponent<CustomNetworkManager>();
         UI = GameObject.Find("WelcomeScreen");
-        menu = GameObject.Find("Menu");
+        menu = GameObject.Find("MenuScreen");
+
         startHostBut = UI.transform.Find("StartHostButton").GetComponent<Button>();
         joinHostBut = UI.transform.Find("StartClientButton").GetComponent<Button>();
 
@@ -74,5 +75,10 @@ public class ConnectHUD : MonoBehaviour {
         netMan.StopHost();
         menu.SetActive(false);
         UI.SetActive(true);
+    }
+
+    public GameObject getQuitHud()
+    {
+        return this.menu ;
     }
 }
