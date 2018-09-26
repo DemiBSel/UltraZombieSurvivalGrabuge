@@ -61,49 +61,6 @@ public class ZombieBehavior : MonoBehaviour {
 
     }
 
-        /*  switch (state)
-          {
-              case ("idle"):
-                  bored--;
-                  animationControl.Play("idle");
-                  if (bored == 0)
-                  {
-                      state = "wandering";
-                      tired = DEF_TIRED;
-                  }
-                  break;
-              case ("walking"):
-
-
-                  break;
-              case ("wandering"):
-                  wander();
-                  tired--;
-
-                  if (tired == 0)
-                  {
-                      state = "idle";
-                      bored = DEF_BORED;
-                  }
-                  break;
-
-              case ("attack"):
-                  attack();
-                  break;
-          }*/
-   
-
-
-    //float angular = 0.0f;
-
-  /*  void wander()
-    {
-        angular += Random.Range(-0.1f, 0.1f);
-        animationControl.Play("walk");
-        transform.Rotate(0,angular , 0);
-        transform.Translate(0, 0, Random.Range(0, 0.03f));
-    }*/
-
     void attack()
     {
 
@@ -129,14 +86,13 @@ public class ZombieBehavior : MonoBehaviour {
 
     void chase()
     {
-
         animationControl.Play("walk");
 
-        moveDirection = transform.forward;
+        moveDirection = new Vector3(0, 0, 1);
         moveDirection *= moveSpeed;
         moveDirection.y -= gravity * Time.deltaTime;
     //    transform.Translate(0, 0, Random.Range(0, 0.03f));
-     transform.Translate(moveDirection * Time.deltaTime);
+        transform.Translate(moveDirection * Time.deltaTime);
         // controller.Move(moveDirection * Time.deltaTime);
     }
 
