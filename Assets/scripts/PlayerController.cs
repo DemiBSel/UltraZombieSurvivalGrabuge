@@ -87,12 +87,20 @@ public class PlayerController : NetworkBehaviour
                 menuOn = true;
             }
         }
+
+
+        //To warn others
+        if(Input.GetKeyDown("a"))
+        {
+            Debug.Log("Warned others");
+            CmdWarnOthers();
+        }
     }
 
 
     public override void OnStartLocalPlayer()
     {
-        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = name;
+        CmdSetNameField(name);
         local_camera = (Camera)transform.Find("Tools").transform.Find("Main Camera").GetComponentInChildren<Camera>();
         local_camera.depth = 1;
 
@@ -108,6 +116,12 @@ public class PlayerController : NetworkBehaviour
         menu = GameObject.Find("Network Manager").GetComponent<ConnectHUD>().getQuitHud();
         menu.SetActive(false);
 
+    }
+
+    [Command]
+    void CmdSetNameField(string name)
+    {
+        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = name;
     }
 
     [Command]
@@ -166,10 +180,25 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-
-    public void warnOthers()
+    [Command]
+    public void CmdWarnOthers()
     {
+        GameObject[] others = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject other in others)
+        {
+            if (other != this.gameObject)
+            {
+                PlayerController otherContr = other.GetComponent<PlayerController>();
+                otherContr.RpcReceiveWarn(this.gameObject);
+            }
+        } 
+    }
 
+    [ClientRpc]
+    public void RpcReceiveWarn(GameObject other)
+    {
+        Debug.Log("reçu un warn");
+        this.gameObject.GetComponent<PlayerHUDControl>().gotWarnedBy(other);
     }
 
 }

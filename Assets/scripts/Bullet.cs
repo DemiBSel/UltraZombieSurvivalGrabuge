@@ -11,7 +11,14 @@ public class Bullet : MonoBehaviour {
 		{
 			health.TakeDamage(10);
 		}
+        var hud = hit.GetComponent<PlayerHUDControl>();
+        if (hud != null)
+        {
+            hud.gotHurtBy(this.gameObject);
+        }
+
         Destroy(gameObject);
+
  
        
     }

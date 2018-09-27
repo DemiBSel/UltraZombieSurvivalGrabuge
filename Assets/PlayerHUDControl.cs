@@ -55,7 +55,6 @@ public class PlayerHUDControl : MonoBehaviour {
         warnPanel.SetActive(true);
         warnStart = Time.time;
         RectTransform canv_rect = canvas.GetComponent<RectTransform>();
-        //hurtPanel.GetComponent<RectTransform>().position.Set(toOther.x*10, toOther.y*10, 0);
         warnPanel.GetComponent<RectTransform>().SetPositionAndRotation(new Vector3(toOther.x * canv_rect.rect.width, toOther.z * canv_rect.rect.height, 0), new Quaternion());
     }
 }
