@@ -73,6 +73,11 @@ public class ZombieBehavior : MonoBehaviour {
             {
                 health.TakeDamage(10);
             }
+            var hud = Target.GetComponent<PlayerHUDControl>();
+            if(hud != null)
+            {
+                hud.gotHurtBy(this.gameObject);
+            }
             attackTime = Time.time + attackRepeatTime;
         }
     }

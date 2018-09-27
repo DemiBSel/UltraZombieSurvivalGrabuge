@@ -29,6 +29,7 @@ public class ConnectHUD : MonoBehaviour {
         playerNameField = UI.transform.Find("PlayerNameField").GetComponent<InputField>();
 
         quitBut = menu.transform.Find("QuitButton").GetComponent<Button>();
+        menu.SetActive(false);
 
         startHostBut.onClick.AddListener(startHost);
         joinHostBut.onClick.AddListener(joinHost);

@@ -166,4 +166,10 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+
+    public void warnOthers()
+    {
+
+    }
+
 }
