@@ -38,12 +38,12 @@ public class PickableObject : MonoBehaviour {
 
         if (hasPlayer && (Input.GetKeyDown("e")))
         {
-            scale = transform.localScale;
+            scale = transform.lossyScale;
             GetComponent<Rigidbody>().isKinematic = true;
             transform.SetParent(playerCam);
             beingCarried = true;
             Debug.Log("et ici on prend l'objet?? ");
-            transform.localScale = scale;
+            transform.localScale = Vector3.Scale(transform.parent.lossyScale,scale);
             gameObject.GetComponent<Renderer>().material.color = Color.red;
         }
 
