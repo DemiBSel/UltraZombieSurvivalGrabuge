@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour
 {
-
+    [SyncVar(hook = "onChangePlayerName")]
     public string playerName;
 
     public GameObject bulletPrefab;
@@ -121,7 +121,7 @@ public class PlayerController : NetworkBehaviour
     [Command]
     void CmdSetNameField(string name)
     {
-        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = name;
+        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
     }
 
     [Command]
@@ -201,4 +201,16 @@ public class PlayerController : NetworkBehaviour
         this.gameObject.GetComponent<PlayerHUDControl>().gotWarnedBy(other);
     }
 
+  
+    public void SetName(string name)
+    {
+        this.playerName = name;
+        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
+    }
+
+    public void onChangePlayerName(string name)
+    {
+        this.playerName = name;
+        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
+    }
 }

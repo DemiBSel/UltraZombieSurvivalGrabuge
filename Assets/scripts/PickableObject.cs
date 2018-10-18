@@ -29,7 +29,6 @@ public class PickableObject : MonoBehaviour {
         if (dist <= 2.0f)
         {
             hasPlayer = true;
-            Debug.Log("on passe la? ");
         }
         else
         {

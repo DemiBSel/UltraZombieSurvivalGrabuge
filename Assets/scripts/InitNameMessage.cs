@@ -10,7 +10,6 @@ public class InitNameMessage : MessageBase {
     public string txt_message;
     public byte[] payload;
 
-    // This method would be generated
     public override void Serialize(NetworkWriter writer)
     { 
         writer.Write(txt_message);
