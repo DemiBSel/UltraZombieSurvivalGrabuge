@@ -33,15 +33,15 @@ public class PlayerController : NetworkBehaviour
             return;
         }
         //movements
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 3.0f;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
+        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 5.0f;
+        var z = Input.GetAxis("Vertical") * Time.deltaTime * 5.0f;
 
 
         //jump
 
         if (Input.GetButton("Jump") && !jumping)
         {
-            this.GetComponent<Rigidbody>().AddForce(new Vector3(0, 100, 0));
+            this.GetComponent<Rigidbody>().AddForce(new Vector3(0, 200, 0));
             jumping = true;
         }
 

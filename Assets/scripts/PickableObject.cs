@@ -6,17 +6,20 @@ public class PickableObject : MonoBehaviour {
 
     public Transform player;
     public Transform playerCam;
-    public int throwForce = 5000;
+    public int throwForce = 100;
 
     private bool hasPlayer = false;
     private bool beingCarried = false;
     private bool touched = false;
+    private Vector3 position;
+
+    private GameObject parent;
 
     public Vector3 scale;
 
     // Use this for initialization
     void Start() {
-
+        position = transform.position;
     }
 
     // Update is called once per frame
@@ -26,7 +29,7 @@ public class PickableObject : MonoBehaviour {
         playerCam = player.GetChild(8).GetChild(0).transform;
         float dist = Vector3.Distance(gameObject.transform.position, player.position);
 
-        if (dist <= 2.0f)
+        if (dist <= 3.0f)
         {
             hasPlayer = true;
         }
@@ -42,7 +45,7 @@ public class PickableObject : MonoBehaviour {
             transform.SetParent(playerCam);
             beingCarried = true;
             Debug.Log("et ici on prend l'objet?? ");
-            transform.localScale = Vector3.Scale(transform.parent.lossyScale,scale);
+            transform.localScale = scale;
             gameObject.GetComponent<Renderer>().material.color = Color.red;
         }
 
@@ -56,6 +59,8 @@ public class PickableObject : MonoBehaviour {
                 touched = false;
                 Debug.Log("aaaaaaaaa ");
                 gameObject.GetComponent<Renderer>().material.color = Color.white;
+                transform.localScale = scale;
+
             }
             else if (Input.GetKeyUp("e"))
             {
@@ -63,27 +68,35 @@ public class PickableObject : MonoBehaviour {
                 transform.parent = null;
                 beingCarried = false;
                 gameObject.GetComponent<Renderer>().material.color = Color.white;
+                transform.localScale = scale;
+
             }
             else if (Input.GetMouseButtonDown(0))
             {
                
                 GetComponent<Rigidbody>().isKinematic = false;
                 GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce);
+                Debug.Log(playerCam.forward * throwForce);
                 transform.parent = null;
                 beingCarried = false;
                 gameObject.GetComponent<Renderer>().material.color = Color.white;
-                
+                transform.localScale = scale;
+
             }
         }
     }
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
         if (beingCarried)
         {
             touched = true;
         }
+        if (other.gameObject.tag == "reset")
+        {
+            transform.position = position;
+        }
 
-    }
+   }
 
 
     public GameObject FindClosestPlayer()
