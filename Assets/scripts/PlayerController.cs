@@ -23,13 +23,21 @@ public class PlayerController : NetworkBehaviour
     public float fireRate;
     public float nextFire;
 
+    public Transform pickable_Object;
+    public Transform playerCam;
+    bool hasPlayer = false;
+    bool beingCarried = false;
+    bool touched = false;
+    public Vector3 scale;
+    public int throwForce = 100;
+
     void Update()
     {
         //to make sure only the local player runs this
         if (!isLocalPlayer)
         {
-            if(tools==null)
-            tools = transform.Find("Tools");
+            if (tools == null)
+                tools = transform.Find("Tools");
             return;
         }
         //movements
@@ -41,7 +49,7 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetButton("Jump") && !jumping)
         {
-            this.GetComponent<Rigidbody>().AddForce(new Vector3(0, 200, 0));
+            this.GetComponent<Rigidbody>().AddForce(new Vector3(0, 100, 0));
             jumping = true;
         }
 
@@ -56,8 +64,8 @@ public class PlayerController : NetworkBehaviour
 
 
         //shooting
-        if (Input.GetButton("Fire2") && Time.time >nextFire)
-        {      
+        if (Input.GetButton("Fire2") && Time.time > nextFire)
+        {
             CmdFire();
             nextFire = Time.time + fireRate;
         }
@@ -90,13 +98,16 @@ public class PlayerController : NetworkBehaviour
 
 
         //To warn others
-        if(Input.GetKeyDown("a"))
+        if (Input.GetKeyDown("a"))
         {
             Debug.Log("Warned others");
             CmdWarnOthers();
         }
-    }
 
+        pick();
+
+
+    }
 
     public override void OnStartLocalPlayer()
     {
@@ -165,7 +176,7 @@ public class PlayerController : NetworkBehaviour
     //ça c pour empecher les double jumps
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name.Contains("Terrain"))
+        if (other.gameObject.name.Contains("Terrain"))
         {
             this.jumping = false;
         }
@@ -184,14 +195,35 @@ public class PlayerController : NetworkBehaviour
     public void CmdWarnOthers()
     {
         GameObject[] others = GameObject.FindGameObjectsWithTag("Player");
-        foreach(GameObject other in others)
+        foreach (GameObject other in others)
         {
             if (other != this.gameObject)
             {
                 PlayerController otherContr = other.GetComponent<PlayerController>();
                 otherContr.RpcReceiveWarn(this.gameObject);
             }
-        } 
+        }
+    }
+
+
+    public GameObject FindClosestObject()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("object");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
     }
 
     [ClientRpc]
@@ -201,7 +233,7 @@ public class PlayerController : NetworkBehaviour
         this.gameObject.GetComponent<PlayerHUDControl>().gotWarnedBy(other);
     }
 
-  
+
     public void SetName(string name)
     {
         this.playerName = name;
@@ -213,4 +245,71 @@ public class PlayerController : NetworkBehaviour
         this.playerName = name;
         gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
     }
+
+
+
+    public void pick()
+    {
+        pickable_Object = FindClosestObject().transform;
+        playerCam = transform.GetChild(8).GetChild(0).transform;
+        float dist = Vector3.Distance(gameObject.transform.position, pickable_Object.position);
+
+        if (dist <= 3.0f)
+        {
+            hasPlayer = true;
+        }
+        else
+        {
+            hasPlayer = false;
+        }
+
+        if (hasPlayer && (Input.GetKeyDown("e")))
+        {
+            scale = pickable_Object.lossyScale;
+            pickable_Object.GetComponent<Rigidbody>().isKinematic = true;
+            pickable_Object.SetParent(playerCam);
+            beingCarried = true;
+            Debug.Log("et ici on prend l'objet?? ");
+            pickable_Object.localScale = scale;
+            pickable_Object.GetComponent<Renderer>().material.color = Color.red;
+        }
+
+
+        if (beingCarried)
+        {
+            if (touched)
+            {
+                pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+                pickable_Object.parent = null;
+                beingCarried = false;
+                touched = false;
+                Debug.Log("aaaaaaaaa ");
+                pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+                pickable_Object.localScale = scale;
+
+            }
+            else if (Input.GetKeyUp("e"))
+            {
+                pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+                pickable_Object.parent = null;
+                beingCarried = false;
+                pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+                pickable_Object.localScale = scale;
+
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+
+                pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+                pickable_Object.GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce);
+                pickable_Object.parent = null;
+                beingCarried = false;
+                pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+                pickable_Object.localScale = scale;
+
+            }
+
+        }
+    }
+
 }

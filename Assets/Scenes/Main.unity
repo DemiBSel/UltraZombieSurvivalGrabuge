@@ -330,8 +330,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 84486711}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.84, y: -0.45, z: -0.4}
-  m_LocalScale: {x: 0.01, y: 4, z: 10}
+  m_LocalPosition: {x: -11.84, y: -1.56, z: -0.4}
+  m_LocalScale: {x: 0.1, y: 4, z: 10}
   m_Children: []
   m_Father: {fileID: 1302495387}
   m_RootOrder: 5
@@ -741,7 +741,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4927072569449416, guid: dff57728428bc0345ab729716ebca912, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -26.164932
+      value: -32.47
       objectReference: {fileID: 0}
     - target: {fileID: 4927072569449416, guid: dff57728428bc0345ab729716ebca912, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1270,10 +1270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a4d4e148519e340b95ca2145db7e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerCam: {fileID: 0}
-  throwForce: 5000
-  scale: {x: 0, y: 0, z: 0}
 --- !u!54 &689738100
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1780,6 +1776,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &846894575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1119571075662832, guid: 034f5f304e68c0040aebfbf0b1044671,
+    type: 2}
+  m_PrefabInternal: {fileID: 1614471804}
+--- !u!114 &846894576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 846894575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a4d4e148519e340b95ca2145db7e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &929542378
 GameObject:
   m_ObjectHideFlags: 0
@@ -1792,12 +1804,12 @@ GameObject:
   - component: {fileID: 929542385}
   - component: {fileID: 929542384}
   - component: {fileID: 929542383}
-  - component: {fileID: 929542382}
   - component: {fileID: 929542381}
   - component: {fileID: 929542380}
+  - component: {fileID: 929542382}
   m_Layer: 0
   m_Name: Cube_Terrain (1)
-  m_TagString: reset
+  m_TagString: object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1879,10 +1891,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a4d4e148519e340b95ca2145db7e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerCam: {fileID: 0}
-  throwForce: 1000
-  scale: {x: 0, y: 0, z: 0}
 --- !u!54 &929542383
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3603,7 +3611,7 @@ Transform:
   m_GameObject: {fileID: 1487619369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.71, y: -0.93, z: -22.77}
-  m_LocalScale: {x: 0.01, y: 3, z: 10}
+  m_LocalScale: {x: 0.1, y: 3, z: 10}
   m_Children: []
   m_Father: {fileID: 1302495387}
   m_RootOrder: 4
@@ -4564,9 +4572,15 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 37db27cd90bcb064daf2429fa42e022f, type: 2}
     - target: {fileID: 1119571075662832, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
       propertyPath: m_TagString
-      value: reset
+      value: object
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114143844736858184, guid: 034f5f304e68c0040aebfbf0b1044671,
+        type: 2}
+      propertyPath: m_LocalPlayerAuthority
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114997435168675858, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1654076914

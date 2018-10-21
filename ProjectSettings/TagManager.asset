@@ -8,6 +8,7 @@ TagManager:
   - Head
   - MoveObject
   - reset
+  - object
   layers:
   - Default
   - TransparentFX
