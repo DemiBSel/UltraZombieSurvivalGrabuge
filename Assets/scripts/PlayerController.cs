@@ -30,6 +30,7 @@ public class PlayerController : NetworkBehaviour
     bool touched = false;
     public Vector3 scale;
     public int throwForce = 100;
+    private NetworkIdentity objNetId;
 
     void Update()
     {
@@ -247,7 +248,7 @@ public class PlayerController : NetworkBehaviour
     }
 
 
-
+    
     public void pick()
     {
         pickable_Object = FindClosestObject().transform;
@@ -262,54 +263,67 @@ public class PlayerController : NetworkBehaviour
         {
             hasPlayer = false;
         }
+       
 
-        if (hasPlayer && (Input.GetKeyDown("e")))
-        {
-            scale = pickable_Object.lossyScale;
-            pickable_Object.GetComponent<Rigidbody>().isKinematic = true;
-            pickable_Object.SetParent(playerCam);
-            beingCarried = true;
-            Debug.Log("et ici on prend l'objet?? ");
-            pickable_Object.localScale = scale;
-            pickable_Object.GetComponent<Renderer>().material.color = Color.red;
-        }
+        Cmdpickup();
 
 
-        if (beingCarried)
-        {
-            if (touched)
-            {
-                pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
-                pickable_Object.parent = null;
-                beingCarried = false;
-                touched = false;
-                Debug.Log("aaaaaaaaa ");
-                pickable_Object.GetComponent<Renderer>().material.color = Color.white;
-                pickable_Object.localScale = scale;
+    }
 
-            }
-            else if (Input.GetKeyUp("e"))
-            {
-                pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
-                pickable_Object.parent = null;
-                beingCarried = false;
-                pickable_Object.GetComponent<Renderer>().material.color = Color.white;
-                pickable_Object.localScale = scale;
+    [Command]
+    public void Cmdpickup()
+    {
+         if (hasPlayer && (Input.GetKeyDown("e")))
+         {
+             //objNetId = pickable_Object.GetComponent<NetworkIdentity>();
+             //objNetId.AssignClientAuthority(connectionToClient);
+             scale = pickable_Object.lossyScale;
+             pickable_Object.GetComponent<Rigidbody>().isKinematic = true;
+             pickable_Object.SetParent(playerCam);
+             beingCarried = true;
+             Debug.Log("et ici on prend l'objet?? ");
+             pickable_Object.localScale = scale;
+             pickable_Object.GetComponent<Renderer>().material.color = Color.red;
+         }
 
-            }
-            else if (Input.GetMouseButtonDown(0))
-            {
 
-                pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
-                pickable_Object.GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce);
-                pickable_Object.parent = null;
-                beingCarried = false;
-                pickable_Object.GetComponent<Renderer>().material.color = Color.white;
-                pickable_Object.localScale = scale;
+         if (beingCarried)
+         {
+             if (touched)
+             {
+                 pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+                 pickable_Object.parent = null;
+                 beingCarried = false;
+                 touched = false;
+                 Debug.Log("aaaaaaaaa ");
+                 pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+                 pickable_Object.localScale = scale;
 
-            }
+             }
+             else if (Input.GetKeyUp("e"))
+             {
+                 pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+                 pickable_Object.parent = null;
+                 beingCarried = false;
+                 pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+                 pickable_Object.localScale = scale;
 
-        }
+             }
+             else if (Input.GetMouseButtonDown(0))
+             {
+
+                 pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+                 pickable_Object.GetComponent<Rigidbody>().AddForce(playerCam.forward* throwForce);
+                 pickable_Object.parent = null;
+                 beingCarried = false;
+                 pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+                 pickable_Object.localScale = scale;
+
+             }
+
+         }
     }
 
 }
+
+

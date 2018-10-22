@@ -1269,7 +1269,7 @@ MonoBehaviour:
   pickable_Object: {fileID: 0}
   playerCam: {fileID: 0}
   scale: {x: 0, y: 0, z: 0}
-  throwForce: 1000
+  throwForce: 1500
 --- !u!114 &114773159977684042
 MonoBehaviour:
   m_ObjectHideFlags: 1
