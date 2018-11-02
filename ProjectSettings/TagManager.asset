@@ -9,6 +9,7 @@ TagManager:
   - MoveObject
   - reset
   - object
+  - CubeSpawn
   layers:
   - Default
   - TransparentFX

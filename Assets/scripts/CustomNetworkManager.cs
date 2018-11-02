@@ -5,6 +5,7 @@ using UnityEngine.Networking.NetworkSystem;
 public class CustomNetworkManager : NetworkManager {
 
     private string playerName;
+    
 
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -21,15 +22,6 @@ public class CustomNetworkManager : NetworkManager {
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId,NetworkReader yo)
     {
-        /*
-        string rec = yo.ReadMessage<StringMessage>().value;
-        Debug.Log("On a reçu :"+ rec);
-
-        GameObject player = (GameObject)Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-        player.GetComponent<PlayerController>().name = rec;
-        NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-        */
-
         base.OnServerAddPlayer(conn, playerControllerId);
         if (conn.playerControllers.Count > 0)
         {

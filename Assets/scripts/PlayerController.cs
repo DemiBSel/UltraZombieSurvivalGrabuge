@@ -230,8 +230,11 @@ public class PlayerController : NetworkBehaviour
     [ClientRpc]
     public void RpcReceiveWarn(GameObject other)
     {
-        Debug.Log("reçu un warn");
-        this.gameObject.GetComponent<PlayerHUDControl>().gotWarnedBy(other);
+        if (isLocalPlayer)
+        {
+            Debug.Log("reçu un warn");
+            this.gameObject.GetComponent<PlayerHUDControl>().gotWarnedBy(other);
+        }
     }
 
 
@@ -251,6 +254,7 @@ public class PlayerController : NetworkBehaviour
     
     public void pick()
     {
+        
         pickable_Object = FindClosestObject().transform;
         playerCam = transform.GetChild(8).GetChild(0).transform;
         float dist = Vector3.Distance(gameObject.transform.position, pickable_Object.position);
@@ -265,25 +269,17 @@ public class PlayerController : NetworkBehaviour
         }
        
 
-        Cmdpickup();
+        pickup();
 
 
     }
 
-    [Command]
-    public void Cmdpickup()
+
+    public void pickup()
     {
          if (hasPlayer && (Input.GetKeyDown("e")))
          {
-             //objNetId = pickable_Object.GetComponent<NetworkIdentity>();
-             //objNetId.AssignClientAuthority(connectionToClient);
-             scale = pickable_Object.lossyScale;
-             pickable_Object.GetComponent<Rigidbody>().isKinematic = true;
-             pickable_Object.SetParent(playerCam);
-             beingCarried = true;
-             Debug.Log("et ici on prend l'objet?? ");
-             pickable_Object.localScale = scale;
-             pickable_Object.GetComponent<Renderer>().material.color = Color.red;
+            CmdPickup(pickable_Object.GetComponent<NetworkIdentity>(),this.GetComponent<NetworkIdentity>());
          }
 
 
@@ -302,28 +298,80 @@ public class PlayerController : NetworkBehaviour
              }
              else if (Input.GetKeyUp("e"))
              {
-                 pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
-                 pickable_Object.parent = null;
-                 beingCarried = false;
-                 pickable_Object.GetComponent<Renderer>().material.color = Color.white;
-                 pickable_Object.localScale = scale;
-
+                CmdLetGo(pickable_Object.GetComponent<NetworkIdentity>(), this.GetComponent<NetworkIdentity>());
              }
              else if (Input.GetMouseButtonDown(0))
              {
-
-                 pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
-                 pickable_Object.GetComponent<Rigidbody>().AddForce(playerCam.forward* throwForce);
-                 pickable_Object.parent = null;
-                 beingCarried = false;
-                 pickable_Object.GetComponent<Renderer>().material.color = Color.white;
-                 pickable_Object.localScale = scale;
-
+                CmdThrow(pickable_Object.GetComponent<NetworkIdentity>(), this.GetComponent<NetworkIdentity>());
              }
 
          }
     }
 
+    [Command]
+    public void CmdPickup(NetworkIdentity obj,NetworkIdentity aPlayer)
+    {
+        obj.AssignClientAuthority(aPlayer.connectionToClient);
+        RpcPickUp();
+
+    }
+    [ClientRpc]
+    public void RpcPickUp()
+    {
+        if (isLocalPlayer)
+        {
+
+            pickable_Object.GetComponent<Rigidbody>().isKinematic = true;
+            scale = pickable_Object.lossyScale;
+            pickable_Object.SetParent(playerCam);
+            beingCarried = true;
+            Debug.Log("et ici on prend l'objet?? ");
+            pickable_Object.localScale = scale;
+            pickable_Object.GetComponent<Renderer>().material.color = Color.red;
+        }
+    }
+
+    [Command]
+    public void CmdLetGo(NetworkIdentity obj, NetworkIdentity aPlayer)
+    {
+        RpcLetGo();
+        obj.RemoveClientAuthority(aPlayer.connectionToClient);
+    }
+    [ClientRpc]
+    public void RpcLetGo()
+    {
+        if (isLocalPlayer)
+        {
+            pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+            pickable_Object.parent = null;
+            beingCarried = false;
+            pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+            pickable_Object.localScale = scale;
+        }
+    }
+
+
+    [Command]
+    public void CmdThrow(NetworkIdentity obj, NetworkIdentity aPlayer)
+    {
+        obj.RemoveClientAuthority(aPlayer.connectionToClient);
+        RpcThrow();
+
+    }
+    [ClientRpc]
+    public void RpcThrow()
+    {
+        if (isLocalPlayer)
+        {
+            pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
+            pickable_Object.GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce);
+            pickable_Object.parent = null;
+            beingCarried = false;
+            pickable_Object.GetComponent<Renderer>().material.color = Color.white;
+            pickable_Object.localScale = scale;
+        }
+
+    }
 }
 
 
