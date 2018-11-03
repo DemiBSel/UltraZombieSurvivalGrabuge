@@ -7,6 +7,10 @@ public class PlayerController : NetworkBehaviour
     [SyncVar(hook = "onChangePlayerName")]
     public string playerName;
 
+    [SyncVar(hook = "paintPlayer")]
+    public Color clothesColor;
+    public GameObject clothes;
+
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public Transform gun;
@@ -107,12 +111,26 @@ public class PlayerController : NetworkBehaviour
 
         pick();
 
+       
+        
+    }
 
+    //color
+    public void setColor(Color aColor)
+    {
+        clothesColor = aColor;
+    }
+
+    public void paintPlayer(Color aColor)
+    {
+        clothesColor = aColor;
+        clothes.GetComponent<Renderer>().material.color = clothesColor;
     }
 
     public override void OnStartLocalPlayer()
     {
         CmdSetNameField(name);
+        //paintPlayer(clothesColor);
         local_camera = (Camera)transform.Find("Tools").transform.Find("Main Camera").GetComponentInChildren<Camera>();
         local_camera.depth = 1;
 
@@ -128,6 +146,19 @@ public class PlayerController : NetworkBehaviour
         menu = GameObject.Find("Network Manager").GetComponent<ConnectHUD>().getQuitHud();
         menu.SetActive(false);
 
+
+        //previously set syncvar callbacks
+        foreach(GameObject curPlayer in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PlayerController pc = curPlayer.GetComponent<PlayerController>();
+            pc.paintPlayer(pc.clothesColor);
+            pc.writeNameField();
+        }
+
+    }
+    public void writeNameField()
+    {
+        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
     }
 
     [Command]
@@ -241,7 +272,7 @@ public class PlayerController : NetworkBehaviour
     public void SetName(string name)
     {
         this.playerName = name;
-        gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
+        //gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
     }
 
     public void onChangePlayerName(string name)
@@ -285,6 +316,7 @@ public class PlayerController : NetworkBehaviour
 
          if (beingCarried)
          {
+            /*
              if (touched)
              {
                  pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
@@ -296,7 +328,8 @@ public class PlayerController : NetworkBehaviour
                  pickable_Object.localScale = scale;
 
              }
-             else if (Input.GetKeyUp("e"))
+             
+             else */if (Input.GetKeyUp("e"))
              {
                 CmdLetGo(pickable_Object.GetComponent<NetworkIdentity>(), this.GetComponent<NetworkIdentity>());
              }
@@ -313,14 +346,12 @@ public class PlayerController : NetworkBehaviour
     {
         obj.AssignClientAuthority(aPlayer.connectionToClient);
         RpcPickUp();
-
     }
     [ClientRpc]
     public void RpcPickUp()
     {
         if (isLocalPlayer)
         {
-
             pickable_Object.GetComponent<Rigidbody>().isKinematic = true;
             scale = pickable_Object.lossyScale;
             pickable_Object.SetParent(playerCam);
@@ -336,12 +367,13 @@ public class PlayerController : NetworkBehaviour
     {
         RpcLetGo();
         obj.RemoveClientAuthority(aPlayer.connectionToClient);
+
     }
     [ClientRpc]
     public void RpcLetGo()
     {
         if (isLocalPlayer)
-        {
+        { 
             pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
             pickable_Object.parent = null;
             beingCarried = false;
@@ -354,8 +386,8 @@ public class PlayerController : NetworkBehaviour
     [Command]
     public void CmdThrow(NetworkIdentity obj, NetworkIdentity aPlayer)
     {
-        obj.RemoveClientAuthority(aPlayer.connectionToClient);
         RpcThrow();
+        obj.RemoveClientAuthority(aPlayer.connectionToClient);
 
     }
     [ClientRpc]

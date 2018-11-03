@@ -14,11 +14,16 @@ public class ConnectHUD : MonoBehaviour {
     InputField hostAddField;
     InputField playerNameField;
     GameObject menu;
+    Color pickedColor;
+    ColorPickController colorCtrl;
+    public GameObject colorPanel;
 
 	// Use this for initialization
 	void Start () {
 
         netMan = GetComponent<CustomNetworkManager>();
+        colorCtrl = colorPanel.GetComponent<ColorPickController>();
+
         UI = GameObject.Find("WelcomeScreen");
         menu = GameObject.Find("MenuScreen");
 
@@ -38,7 +43,7 @@ public class ConnectHUD : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     void startHost()
@@ -50,6 +55,7 @@ public class ConnectHUD : MonoBehaviour {
         else
         {
             netMan.setPlayerName(playerNameField.text);
+            netMan.setPlayerColor(colorCtrl.pickedColor);
             netMan.StartHost();
             UI.SetActive(false);
         }
@@ -64,6 +70,7 @@ public class ConnectHUD : MonoBehaviour {
         else
         {
             netMan.setPlayerName(playerNameField.text);
+            netMan.setPlayerColor(colorCtrl.pickedColor);
             var add = hostAddField.text;
             netMan.networkAddress = add;
             netMan.StartClient();
