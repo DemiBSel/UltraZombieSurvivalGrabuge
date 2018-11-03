@@ -129,6 +129,7 @@ public class PlayerController : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
+        //initAllShaders(); //peut etre pour plus tard
         CmdSetNameField(name);
         //paintPlayer(clothesColor);
         local_camera = (Camera)transform.Find("Tools").transform.Find("Main Camera").GetComponentInChildren<Camera>();
@@ -403,6 +404,28 @@ public class PlayerController : NetworkBehaviour
             pickable_Object.localScale = scale;
         }
 
+    }
+
+
+    public void initAllShaders()
+    {
+        foreach(GameObject currPlayer in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            int i = 0;
+            GameObject ch;
+            while(i < currPlayer.transform.childCount)
+            {
+                ch = currPlayer.transform.GetChild(i).gameObject;
+                if (ch.name.Contains("Mesh"))
+                {
+                    Renderer mesh = ch.GetComponent<Renderer>();
+                    mesh.material.shader = Shader.Find("Custom/playerShader");
+                    
+                }
+                
+                i++;
+            }
+        }
     }
 }
 
