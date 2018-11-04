@@ -43,6 +43,11 @@ public class PlayerController : NetworkBehaviour
     public Vector3 scale;
     private float throwForce = 25;
     private NetworkIdentity objNetId;
+    private GameObject score0;
+    private int score;
+    private float maxDist;
+
+    
 
     Quaternion lastRotation;
 
@@ -119,9 +124,13 @@ public class PlayerController : NetworkBehaviour
             CmdWarnOthers();
         }
 
+
+
+        updateScore();
+
         pick();
 
-        
+
     }
 
     //color
@@ -134,6 +143,22 @@ public class PlayerController : NetworkBehaviour
     {
         clothesColor = aColor;
         clothes.GetComponent<Renderer>().material.color = clothesColor;
+    }
+
+    public void updateScore()
+    {
+        if (score0 == null)
+        {
+            score0 = GameObject.Find("Score0");
+            maxDist = Vector3.Distance(transform.position, score0.transform.position);
+            score = 0;
+        }
+        if(Vector3.Distance(transform.position,score0.transform.position)>maxDist)
+        {
+            score += 1;
+            maxDist = Vector3.Distance(transform.position, score0.transform.position);
+        }
+        GameObject.Find("ScoreTextDisplay").GetComponent<Text>().text = "" + score;
     }
 
     public override void OnStartLocalPlayer()

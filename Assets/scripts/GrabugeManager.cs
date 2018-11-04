@@ -1,0 +1,37 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+
+public class GrabugeManager : NetworkBehaviour {
+
+    List<PlayerController> players; 
+
+
+	// Use this for initialization
+	void Start () {
+        players = new List<PlayerController>();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        Debug.Log("grabuuuuge");
+	}
+
+    public void AddPlayer(PlayerController pl)
+    {
+        players.Add(pl);
+    }
+
+    public void respawnAll()
+    {
+        PlayerController[] lPl = players.ToArray();
+        int i = 0;
+        while(i< lPl.Length)
+        {
+            lPl[i].gameObject.GetComponent<Health>().RpcRespawn();
+            i++;
+        }
+        GameObject.Find("EndPanel").SetActive(false);
+    }
+}

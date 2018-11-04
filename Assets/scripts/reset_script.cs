@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class reset_script : MonoBehaviour {
 
+    public GameObject panel;
 
 
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -20,9 +20,15 @@ public class reset_script : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-           var health = other.GetComponent<Health>();
-           health.TakeDamage(1000);
+           panel.SetActive(true);
+
         }
 
+    }
+
+    public void respawn()
+    {
+        //var health = other.GetComponent<Health>();
+        //health.TakeDamage(1000);
     }
 }

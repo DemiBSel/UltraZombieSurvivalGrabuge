@@ -9,7 +9,7 @@ public class basketTarget : NetworkBehaviour {
     [SyncVar]
     public int score;
     [SyncVar (hook="colorChange")]
-    Color indicator;
+    public Color indicator;
     [SyncVar]
     Vector3 initialPos;
     float inc = 1.0f;
@@ -70,6 +70,13 @@ public class basketTarget : NetworkBehaviour {
         GetComponent<Renderer>().material.color = indicator;
         RpcSetColor(indicator);
        
+    }
+
+    [Command]
+    public void CmdPaint(Color color)
+    {
+        GetComponent<Renderer>().material.color = indicator;
+        RpcSetColor(indicator);
     }
 
     public void colorChange(Color aColor)

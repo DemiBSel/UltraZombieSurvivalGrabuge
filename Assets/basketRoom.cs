@@ -37,20 +37,44 @@ public class basketRoom : NetworkBehaviour {
         if(currentScore>100)
         {
             CmdFinish();
+            disappear();
         }
 	}
     [Command]
     private void CmdFinish()
     {
-        //door.SetActive(false);
         RpcFinish();
     }
 
     [ClientRpc]
     private void RpcFinish()
     {
-        Debug.Log("coucou");
         door.SetActive(false);
-        this.gameObject.SetActive(false);
+    }
+
+    public void disappear()
+    {
+        int i = 0;
+        int currentScore = 0;
+        float alpha = targets[0].GetComponent<basketTarget>().indicator.a;
+        if(alpha >0)
+        {
+            while (i < targets.Length)
+            {
+                basketTarget cur = targets[i].GetComponent<basketTarget>();
+                cur.indicator.a = cur.indicator.a - 0.002f;
+                cur.CmdPaint(cur.indicator);
+                i++;
+            }
+        }
+        else
+        {
+            while (i < targets.Length)
+            {
+                targets[i].SetActive(false);
+                i++;
+            }
+        }
+
     }
 }
