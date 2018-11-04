@@ -10,22 +10,44 @@ public class basketTarget : NetworkBehaviour {
     public int score;
     [SyncVar (hook="colorChange")]
     Color indicator;
-	// Use this for initialization
-	void Start () {
+    [SyncVar]
+    Vector3 initialPos;
+    float inc = 1.0f;
+    // Use this for initialization
+    void Start () {
         score = 0;
         value = (int) transform.lossyScale.x;
         indicator = new Color(1, 1, 1, 1);
         GetComponent<Renderer>().material.color = indicator;
+        initialPos = transform.position;
+
     }
 
     // Update is called once per frame
     void Update () {
         GetComponent<Renderer>().material.color = indicator;
-	}
+        if(transform.position != initialPos) {
+            float step = inc * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, initialPos, step);
+            inc += 0.1f;
+        }
+        else
+        {
+            inc = 1.0f;
+        }
+       
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        /*if (other.CompareTag("object"))
+        { 
+            CmdGetHit();
+        }*/
+
         CmdGetHit();
+
     }
 
     [Command]
@@ -47,6 +69,7 @@ public class basketTarget : NetworkBehaviour {
         }
         GetComponent<Renderer>().material.color = indicator;
         RpcSetColor(indicator);
+       
     }
 
     public void colorChange(Color aColor)
@@ -60,6 +83,8 @@ public class basketTarget : NetworkBehaviour {
     {
         indicator = aColor;
         GetComponent<Renderer>().material.color = aColor;
+        //float step = 100 * Time.deltaTime;
+        //transform.position = Vector3.MoveTowards(transform.position, initialPos, step);
     }
 
 }
