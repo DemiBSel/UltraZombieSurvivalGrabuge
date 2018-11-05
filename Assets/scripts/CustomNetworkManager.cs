@@ -38,7 +38,6 @@ public class CustomNetworkManager : NetworkManager {
             string [] rec = yo.ReadMessage<StringMessage>().value.Split(';');
             player.GetComponent<PlayerController>().SetName(rec[0]);
             player.GetComponent<PlayerController>().setColor(new Color(float.Parse(rec[1]), float.Parse(rec[2]), float.Parse(rec[3]), 1));
-            grabugeur.AddPlayer(player.GetComponent<PlayerController>());
         }
     }
 

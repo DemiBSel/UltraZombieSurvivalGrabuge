@@ -44,7 +44,7 @@ public class PlayerController : NetworkBehaviour
     private float throwForce = 25;
     private NetworkIdentity objNetId;
     private GameObject score0;
-    private int score;
+    public int score;
     private float maxDist;
 
     
@@ -181,9 +181,10 @@ public class PlayerController : NetworkBehaviour
         menu = GameObject.Find("Network Manager").GetComponent<ConnectHUD>().getQuitHud();
         menu.SetActive(false);
 
-
+        GameObject.Find("Network Manager").GetComponent<ConnectHUD>().lostPanel.transform.Find("EndPanelReset").GetComponent<Button>().onClick.AddListener(RespawnAll);
+        GameObject.Find("Network Manager").GetComponent<ConnectHUD>().winPanel.transform.Find("EndPanelReset").GetComponent<Button>().onClick.AddListener(RespawnAll);
         //previously set syncvar callbacks
-        foreach(GameObject curPlayer in GameObject.FindGameObjectsWithTag("Player"))
+        foreach (GameObject curPlayer in GameObject.FindGameObjectsWithTag("Player"))
         {
             PlayerController pc = curPlayer.GetComponent<PlayerController>();
             pc.paintPlayer(pc.clothesColor);
@@ -255,6 +256,37 @@ public class PlayerController : NetworkBehaviour
         {
             this.jumping = false;
         }
+    }
+
+    public void RespawnAll()
+    {
+        CmdRespawnAll();
+    }
+
+    [Command]
+    public void CmdRespawnAll()
+    {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            obj.GetComponent<PlayerController>().CmdRespawn();
+            Debug.Log(name + " Told " + obj.name);
+        }
+    }
+
+    [Command]
+    public void CmdRespawn()
+    {
+        RpcRespawn();
+    }
+    [ClientRpc]
+    public void RpcRespawn()
+    {
+        Debug.Log("Got rpc respawn");
+        if(isLocalPlayer)
+        {
+            GetComponent<Health>().Respawn();
+        }
+
     }
 
     [Command]

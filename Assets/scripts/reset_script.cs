@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class reset_script : MonoBehaviour {
 
     public GameObject panel;
+    public GameObject textZone;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
@@ -20,15 +21,27 @@ public class reset_script : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-           panel.SetActive(true);
+            lose();
 
         }
 
     }
 
-    public void respawn()
+    public void lose()
     {
-        //var health = other.GetComponent<Health>();
-        //health.TakeDamage(1000);
+        panel.SetActive(true);
+
+        int max = 0;
+        foreach (GameObject curPlayer in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PlayerController pc = curPlayer.GetComponent<PlayerController>();
+            if (pc.score > max)
+            {
+                max = pc.score;
+            }
+        }
+
+
+        textZone.GetComponent<Text>().text = "" + max;
     }
 }

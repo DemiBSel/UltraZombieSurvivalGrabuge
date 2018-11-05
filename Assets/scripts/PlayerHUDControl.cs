@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerHUDControl : MonoBehaviour {
     GameObject canvas;
-    GameObject warnPanel;
-    GameObject hurtPanel;
+    public GameObject warnPanel;
+    public GameObject hurtPanel;
+
 
     float warnStart;
     float hurtStart;
@@ -16,8 +17,12 @@ public class PlayerHUDControl : MonoBehaviour {
         warnPanel = canvas.transform.Find("WarnHint").gameObject;
         hurtPanel = canvas.transform.Find("HurtHint").gameObject;
 
+
+
+
         warnPanel.SetActive(false);
         hurtPanel.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
@@ -33,6 +38,8 @@ public class PlayerHUDControl : MonoBehaviour {
             warnPanel.SetActive(false);
             warnStart = 0.0f;
         }
+
+        
 	}
 
     public void gotHurtBy(GameObject other)
@@ -57,4 +64,6 @@ public class PlayerHUDControl : MonoBehaviour {
         RectTransform canv_rect = canvas.GetComponent<RectTransform>();
         warnPanel.GetComponent<RectTransform>().SetPositionAndRotation(new Vector3(toOther.x * canv_rect.rect.width, toOther.z * canv_rect.rect.height, 0), new Quaternion());
     }
+
+
 }

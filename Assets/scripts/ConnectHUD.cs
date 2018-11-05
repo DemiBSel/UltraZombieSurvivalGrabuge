@@ -18,14 +18,17 @@ public class ConnectHUD : MonoBehaviour {
     ColorPickController colorCtrl;
     public GameObject colorPanel;
 
-	// Use this for initialization
-	void Start () {
+    public GameObject lostPanel;
+    public GameObject winPanel;
+
+    // Use this for initialization
+    void Start () {
 
         netMan = GetComponent<CustomNetworkManager>();
         colorCtrl = colorPanel.GetComponent<ColorPickController>();
 
-        UI = GameObject.Find("WelcomeScreen");
-        menu = GameObject.Find("MenuScreen");
+        UI = GameObject.Find("WelcomePanel");
+        menu = GameObject.Find("MenuPanel");
 
         startHostBut = UI.transform.Find("StartHostButton").GetComponent<Button>();
         joinHostBut = UI.transform.Find("StartClientButton").GetComponent<Button>();
@@ -36,6 +39,11 @@ public class ConnectHUD : MonoBehaviour {
         quitBut = menu.transform.Find("QuitButton").GetComponent<Button>();
         menu.SetActive(false);
 
+        lostPanel = GameObject.Find("EndPanel");
+        winPanel = GameObject.Find("VictoryPanel");
+
+        lostPanel.SetActive(false);
+        winPanel.SetActive(false);
         startHostBut.onClick.AddListener(startHost);
         joinHostBut.onClick.AddListener(joinHost);
         quitBut.onClick.AddListener(quitGame);
@@ -88,5 +96,23 @@ public class ConnectHUD : MonoBehaviour {
     public GameObject getQuitHud()
     {
         return this.menu ;
+    }
+
+    public void showLost()
+    {
+        lostPanel.SetActive(true);
+    }
+    public void hideLost()
+    {
+        lostPanel.SetActive(false);
+    }
+
+    public void showWin()
+    {
+        winPanel.SetActive(true);
+    }
+    public void hideWin()
+    {
+        winPanel.SetActive(false);
     }
 }

@@ -46,9 +46,13 @@ public class Health : NetworkBehaviour
     {
 		healthBar.sizeDelta = new Vector2(currentHealth, healthBar.sizeDelta.y);
 	}
-	
 	[ClientRpc]
-	public void RpcRespawn()
+    void RpcRespawn()
+    {
+        Respawn();
+    }
+
+	public void Respawn()
 	{
 		if (isLocalPlayer)
 		{
@@ -63,7 +67,10 @@ public class Health : NetworkBehaviour
             }
 
             transform.position = spawnPoint;
-		}
+            GameObject.Find("Network Manager").GetComponent<ConnectHUD>().hideLost();
+            GameObject.Find("Network Manager").GetComponent<ConnectHUD>().hideWin();
+        }
+
 	}
 	
 }

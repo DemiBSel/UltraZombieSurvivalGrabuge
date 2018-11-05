@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 4722515432850174}
   - component: {fileID: 33795559807916990}
   - component: {fileID: 23405447666844134}
+  - component: {fileID: 136383546139147676}
   m_Layer: 0
   m_Name: male_worksuit01Mesh
   m_TagString: Untagged
@@ -1080,8 +1081,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26, y: 0.1, z: 0.12}
-  m_Center: {x: 0, y: -0.04, z: 0}
+  m_Size: {x: 0.6390698, y: 0.11917028, z: 0.29299408}
+  m_Center: {x: 0.051763177, y: -0.030414864, z: 0.08649704}
 --- !u!65 &65691713349903382
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1119,6 +1120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa3860bda4ca074990d59af7189d24a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  warnPanel: {fileID: 0}
+  hurtPanel: {fileID: 0}
 --- !u!114 &114211896643850738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1300,6 +1303,8 @@ MonoBehaviour:
   pickable_Object: {fileID: 0}
   playerCam: {fileID: 0}
   pickUpPosition: {fileID: 4233951814246038}
+  pickUpOffset: 0
+  pickUpVectorToCenter: {x: 0, y: 0, z: 0}
   scale: {x: 0, y: 0, z: 0}
 --- !u!114 &114773159977684042
 MonoBehaviour:
@@ -1390,6 +1395,19 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1042713097326242}
   m_Enabled: 1
+--- !u!136 &136383546139147676
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1716042546220812}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3311094
+  m_Height: 1.1418049
+  m_Direction: 1
+  m_Center: {x: -0.010944724, y: 0.8380028, z: 0.0152466}
 --- !u!153 &153509128116056278
 ConfigurableJoint:
   m_ObjectHideFlags: 1
