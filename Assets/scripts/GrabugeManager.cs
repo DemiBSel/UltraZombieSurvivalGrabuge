@@ -31,6 +31,22 @@ public class GrabugeManager : NetworkBehaviour {
             lPl[i].gameObject.GetComponent<Health>().RpcRespawn();
             i++;
         }
-        GameObject.Find("EndPanel").SetActive(false);
+        RpcPanel();
+    }
+
+
+ 
+
+    [ClientRpc]
+    public void RpcPanel()
+    {
+        if (GameObject.Find("EndPanel").active)
+        {
+            GameObject.Find("EndPanel").SetActive(false);
+        }
+        if (GameObject.Find("VictoryPanel").active)
+        {
+            GameObject.Find("VictoryPanel").SetActive(false);
+        }
     }
 }
