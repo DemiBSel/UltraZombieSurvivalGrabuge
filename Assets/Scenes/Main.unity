@@ -18205,6 +18205,10 @@ Prefab:
       propertyPath: m_InterpolateMovement
       value: 2.45
       objectReference: {fileID: 0}
+    - target: {fileID: 1119571075662832, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
+      propertyPath: m_Name
+      value: Cube_Terrain_Sm(2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
   m_IsPrefabAsset: 0
@@ -22169,6 +22173,10 @@ Prefab:
     - target: {fileID: 4004436746899740, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
       propertyPath: m_LocalScale.z
       value: 2.3579
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119571075662832, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
+      propertyPath: m_Name
+      value: Cube_Terrain_XL
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
