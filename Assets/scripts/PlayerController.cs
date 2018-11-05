@@ -165,7 +165,6 @@ public class PlayerController : NetworkBehaviour
     {
         //initAllShaders(); //peut etre pour plus tard
         CmdSetNameField(name);
-        //paintPlayer(clothesColor);
         local_camera = (Camera)transform.Find("Tools").transform.Find("Main Camera").GetComponentInChildren<Camera>();
         local_camera.depth = 1;
         playerCam = local_camera.transform;
@@ -214,8 +213,7 @@ public class PlayerController : NetworkBehaviour
 
         // Add velocity to the bullet
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 25;
-        //tools.Rotate(-0.5f, 0, 0);
-        //RpcRecoil();
+
 
         NetworkServer.Spawn(bullet);
         // Destroy the bullet after 2 seconds
@@ -299,7 +297,6 @@ public class PlayerController : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            Debug.Log("reçu un warn");
             this.gameObject.GetComponent<PlayerHUDControl>().gotWarnedBy(other);
         }
     }
@@ -308,7 +305,6 @@ public class PlayerController : NetworkBehaviour
     public void SetName(string name)
     {
         this.playerName = name;
-        //gameObject.transform.Find("Healthbar Canvas").Find("Background").Find("NameField").GetComponent<Text>().text = playerName;
     }
 
     public void onChangePlayerName(string name)
@@ -369,20 +365,7 @@ public class PlayerController : NetworkBehaviour
 
          if (beingCarried)
          {
-            /*
-             if (touched)
-             {
-                 pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
-                 pickable_Object.parent = null;
-                 beingCarried = false;
-                 touched = false;
-                 Debug.Log("aaaaaaaaa ");
-                 pickable_Object.GetComponent<Renderer>().material.color = Color.white;
-                 pickable_Object.localScale = scale;
-
-             }
-             
-             else */if (Input.GetKeyDown("e"))
+            if (Input.GetKeyDown("e"))
              {
                 CmdLetGo(pickable_Object.GetComponent<NetworkIdentity>(), this.GetComponent<NetworkIdentity>());
                 
@@ -395,11 +378,7 @@ public class PlayerController : NetworkBehaviour
             {
                 float step = 10 * Time.deltaTime;
                 float angle = pickUpPosition.rotation.normalized.y;
-                //Vector3 target = Vector3.Scale(pickable_Object.transform.localScale,new Vector3(-1*Mathf.Cos(angle), 0 , 1 * Mathf.Sin(angle)));
-                //pickable_Object.position = Vector3.MoveTowards(pickable_Object.position,pickUpPosition.position + playerCam.forward * pickable_Object.transform.localScale.x, step);
                 pickable_Object.transform.position = Vector3.MoveTowards(pickable_Object.transform.position, pickUpPosition.position + playerCam.forward * pickUpOffset/2, step);
-                //pickable_Object.rotation = Quaternion.Slerp(lastRotation, pickable_Object.transform.rotation, step);
-                //pickable_Object.Rotate(Vector3.Project(pickUpPosition.position , pickUpVectorToCenter).normalized);
                 lastRotation = pickUpPosition.rotation; 
             }
 
@@ -433,12 +412,8 @@ public class PlayerController : NetworkBehaviour
             }
             pickable_Object.GetComponent<Rigidbody>().isKinematic = true;
             float step = 5 * Time.deltaTime;
-            //pickable_Object.transform.position = Vector3.MoveTowards(pickable_Object.transform.position, pickUpPosition.position + playerCam.forward * pickable_Object.transform.localScale.x, step);
             pickable_Object.transform.position = Vector3.MoveTowards(pickable_Object.transform.position, pickUpPosition.position + playerCam.forward * pickUpOffset, step);
             beingCarried = true;
-            Debug.Log("et ici on prend l'objet?? ");
-
-            //pickable_Object.transform.localScale = scale;
 
         }
     }
@@ -447,8 +422,6 @@ public class PlayerController : NetworkBehaviour
     public void CmdLetGo(NetworkIdentity obj, NetworkIdentity aPlayer)
     {
         RpcLetGo(obj.gameObject);
-        //obj.RemoveClientAuthority(aPlayer.connectionToClient);
-
     }
 
     [Command]
@@ -474,9 +447,6 @@ public class PlayerController : NetworkBehaviour
     {
         RpcThrow(obj.gameObject);
         obj.GetComponent<Rigidbody>().isKinematic = false;
-        
-        //obj.RemoveClientAuthority(aPlayer.connectionToClient);
-        //pickable_Object.GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce);
     }
     [ClientRpc]
     public void RpcThrow(GameObject pickable_Object)
@@ -487,12 +457,7 @@ public class PlayerController : NetworkBehaviour
         {
             beingCarried = false;
             pickable_Object.GetComponent<Rigidbody>().isKinematic = false;
-
-
-            //pickable_Object.GetComponent<Rigidbody>().velocity = playerCam.forward * throwForce;
-            //pickable_Object.GetComponent<NetworkIdentity>().RemoveClientAuthority(connectionToClient);
             pickable_Object.GetComponent<Rigidbody>().velocity = GetComponent<PlayerController>().playerCam.forward * throwForce;
-            //CmdRemoveAuth(pickable_Object.GetComponent<NetworkIdentity>(), GetComponent<NetworkIdentity>());
         }
 
     }

@@ -41,11 +41,6 @@ public class basketTarget : NetworkBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.CompareTag("object"))
-        { 
-            CmdGetHit();
-        }*/
-
         CmdGetHit();
 
     }
@@ -54,7 +49,7 @@ public class basketTarget : NetworkBehaviour {
     public void CmdGetHit()
     {
         score += value;
-        int i = (int)Random.Range(0, 2);
+        int i = (int)Random.Range(0, 3);
         switch (i)
         {
             case 0:
@@ -90,8 +85,6 @@ public class basketTarget : NetworkBehaviour {
     {
         indicator = aColor;
         GetComponent<Renderer>().material.color = aColor;
-        //float step = 100 * Time.deltaTime;
-        //transform.position = Vector3.MoveTowards(transform.position, initialPos, step);
     }
 
 }

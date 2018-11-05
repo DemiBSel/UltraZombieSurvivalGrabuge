@@ -16,7 +16,6 @@ public class CustomNetworkManager : NetworkManager {
 
         allez.txt_message = playerName;
         allez.txt_message += ";" + color.r+";"+color.g + ";" +color.b;
-        Debug.Log("got color" + color.ToString());
         ClientScene.AddPlayer(conn,0,allez);
     }
 
@@ -27,7 +26,6 @@ public class CustomNetworkManager : NetworkManager {
 
     public void setPlayerColor(Color aColor)
     {
-        Debug.Log("setplayercolor " + aColor.ToString());
         this.color = aColor;
     }
 
