@@ -1306,6 +1306,7 @@ MonoBehaviour:
   pickUpOffset: 0
   pickUpVectorToCenter: {x: 0, y: 0, z: 0}
   scale: {x: 0, y: 0, z: 0}
+  score: 0
 --- !u!114 &114773159977684042
 MonoBehaviour:
   m_ObjectHideFlags: 1

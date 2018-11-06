@@ -56,9 +56,6 @@ public class Health : NetworkBehaviour
 	{
 		if (isLocalPlayer)
 		{
-			//reset initial health
-			//currentHealth = maxHealth;
-			// move back to zero location
 			Vector3 spawnPoint = Vector3.zero;
 
             if(spawnPoints != null && spawnPoints.Length>0)

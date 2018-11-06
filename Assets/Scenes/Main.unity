@@ -1321,7 +1321,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 84486711}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.840012, y: -1.1800003, z: -0.3999939}
+  m_LocalPosition: {x: -11.840012, y: -1.93, z: -0.3999939}
   m_LocalScale: {x: 0.1, y: 7.4936, z: 12.314}
   m_Children: []
   m_Father: {fileID: 1757993450}
@@ -6577,7 +6577,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 8e255d681414b2f48851635e9c301ca7, type: 2}
+  m_Material: {fileID: 2100000, guid: df7476cf5eb9fb64d979421b600fe339, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -16328,7 +16328,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1487619369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.7100067, y: -0.9300003, z: -22.770004}
+  m_LocalPosition: {x: -4.7100067, y: -1.39, z: -22.770004}
   m_LocalScale: {x: 0.1, y: 3, z: 12.974}
   m_Children: []
   m_Father: {fileID: 1757993450}
@@ -19325,6 +19325,21 @@ Prefab:
     - target: {fileID: 1119571075662832, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}
       propertyPath: m_Name
       value: Planche_Terrain0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65210429893959402, guid: 034f5f304e68c0040aebfbf0b1044671,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 65210429893959402, guid: 034f5f304e68c0040aebfbf0b1044671,
+        type: 2}
+      propertyPath: m_Center.y
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54799682524396978, guid: 034f5f304e68c0040aebfbf0b1044671,
+        type: 2}
+      propertyPath: m_Interpolate
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 034f5f304e68c0040aebfbf0b1044671, type: 2}

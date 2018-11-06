@@ -61,15 +61,17 @@ public class PlayerController : NetworkBehaviour
             return;
         }
         //movements
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 5.0f;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * 5.0f;
+        var x = 0.0f;
+        var z = 0.0f;
 
+            x = Input.GetAxis("Horizontal") * Time.deltaTime * 6.0f;
+            z = Input.GetAxis("Vertical") * Time.deltaTime * 5.0f;
 
         //jump
 
         if (Input.GetButton("Jump") && !jumping)
         {
-            this.GetComponent<Rigidbody>().AddForce(new Vector3(0, 100, 0));
+            this.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 100.0f, 0.0f)+ Input.GetAxis("Vertical") *transform.forward * 45);
             jumping = true;
         }
 
@@ -183,6 +185,7 @@ public class PlayerController : NetworkBehaviour
 
         GameObject.Find("Network Manager").GetComponent<ConnectHUD>().lostPanel.transform.Find("EndPanelReset").GetComponent<Button>().onClick.AddListener(RespawnAll);
         GameObject.Find("Network Manager").GetComponent<ConnectHUD>().winPanel.transform.Find("EndPanelReset").GetComponent<Button>().onClick.AddListener(RespawnAll);
+        
         //previously set syncvar callbacks
         foreach (GameObject curPlayer in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -281,7 +284,6 @@ public class PlayerController : NetworkBehaviour
     [ClientRpc]
     public void RpcRespawn()
     {
-        Debug.Log("Got rpc respawn");
         if(isLocalPlayer)
         {
             GetComponent<Health>().Respawn();

@@ -15,11 +15,6 @@ public class Billboard : NetworkBehaviour {
             local_camera = findCam();
 	}
 
-    public override void OnStartLocalPlayer()
-    {
-        Debug.Log("billboard start local player");
-    }
-
     Camera findCam()
     {
         if (GameObject.Find("Main Camera") != null)
