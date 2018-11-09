@@ -14,6 +14,7 @@ public class PlayerController : NetworkBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public Transform gun;
+    public float speed = 5.0f;
 
     GameObject menu;
     bool menuOn = false;
@@ -61,11 +62,11 @@ public class PlayerController : NetworkBehaviour
             return;
         }
         //movements
-        var x = 0.0f;
+   /*     var x = 0.0f;
         var z = 0.0f;
 
-            x = Input.GetAxis("Horizontal") * Time.deltaTime * 6.0f;
-            z = Input.GetAxis("Vertical") * Time.deltaTime * 5.0f;
+            x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+            z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
         //jump
 
@@ -75,13 +76,24 @@ public class PlayerController : NetworkBehaviour
             jumping = true;
         }
 
+        if (Input.GetKey(KeyCode.LeftShift) && !jumping)
+        {
+            state = "running";
+            speed = 15.0f;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            state = "walking";
+            speed = 10.0f;
+        }*/
 
-        var rot_x = Input.GetAxis("Mouse X") * 10.0f; ;
+
+       /* var rot_x = Input.GetAxis("Mouse X") * 10.0f;
         var rot_y = Input.GetAxis("Mouse Y") * 10.0f;
 
 
         bool blockCam = tools.localRotation.x - rot_y / 100.0f > 0 && tools.localRotation.x - rot_y / 100.0f < 1;
-        CmdMovements(blockCam, (float)x, (float)z, (float)rot_x, (float)rot_y);
+        CmdMovements(blockCam, (float)x, (float)z, (float)rot_x, (float)rot_y);*/
         //attention le nom de la variable blockCam est pas logique du tout mdr
 
 
@@ -92,15 +104,15 @@ public class PlayerController : NetworkBehaviour
             nextFire = Time.time + fireRate;
         }
 
-        //state machine (pour les animations)
+     /*   //state machine (pour les animations)
         if (x > 0 || z > 0)
         {
-            state = "running";
+            state = "walking";
         }
         else
         {
             state = "idle";
-        }
+        }*/
 
         // Update is called once per frame
         if (Input.GetKeyDown(KeyCode.Escape))
